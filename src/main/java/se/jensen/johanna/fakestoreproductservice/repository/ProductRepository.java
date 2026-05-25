@@ -1,5 +1,6 @@
 package se.jensen.johanna.fakestoreproductservice.repository;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -20,5 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
 
   @Query("SELECT p.externalId FROM Product p")
   Set<Long> findAllExternalIds();
+
+  List<Product> findAllByProductIdIn(Set<UUID> productIds);
 
 }

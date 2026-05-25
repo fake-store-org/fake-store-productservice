@@ -1,10 +1,11 @@
-name: Build and deploy to prod
+name: Build and push to ECR for development
 on:
   push:
-    branches: [ main ]
+    branches:
+      - development
 
 jobs:
-  deploy-prod:
+  deploy-dev:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,7 +26,7 @@ jobs:
       - name: Build, tag and push image to AWS ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: products
+          ECR_REPOSITORY: fakestore/products
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .

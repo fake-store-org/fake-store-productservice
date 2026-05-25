@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import se.jensen.johanna.fakestoreproductservice.dto.ProductBatchResponse;
 import se.jensen.johanna.fakestoreproductservice.dto.ProductDTO;
 import se.jensen.johanna.fakestoreproductservice.dto.ProductSyncDTO;
 import se.jensen.johanna.fakestoreproductservice.dto.UpdateProductRequest;
@@ -82,9 +83,15 @@ public class ProductService {
     });
   }
 
+  public ProductBatchResponse getProductBatch(Set<UUID> productIds) {
+    List<ProductDTO> products = productRepository.findAllByProductIdIn(productIds).stream()
+        .map(productMapper::toProductDTO).toList();
+    return new ProductBatchResponse(products);
+  }
+
   @Transactional
   public void syncProducts() {
-    log.info("Syncing products from fake store");
+    log.info("Syncing products from fake store...");
 
     try {
       ProductSyncDTO[] remoteProducts = restTemplate.getForObject(fakeStoreUrl,
