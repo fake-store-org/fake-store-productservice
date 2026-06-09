@@ -20,7 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.client.RestTemplate;
 import se.jensen.johanna.fakestoreproductservice.dto.ProductDTO;
 import se.jensen.johanna.fakestoreproductservice.dto.UpdateProductRequest;
 import se.jensen.johanna.fakestoreproductservice.mapper.ProductMapper;
@@ -34,8 +33,7 @@ class ProductServiceTest {
   private ProductService productService;
   @Mock
   private ProductRepository productRepository;
-  @Mock
-  private RestTemplate restTemplate;
+
   @Mock
   private ProductMapper productMapper;
 
